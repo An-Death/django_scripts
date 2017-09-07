@@ -4,12 +4,12 @@ from . import views
 
 urlpatterns = [
     # ex: /poll/
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.Test.index, name='index'),
     #  ex: /poll/5/
-    url(r'^(?P<question_id>[0-9]+)/*$', views.detail, name='detail'),
+    url(r'^(?P<question_id>[0-9]+)/*$', views.Test.detail, name='detail'),
     #  ex /poll/5/results
-    url(r'^(?P<question_id>[0-9]+)/result(s*)/$', views.results, name='results'),
+    url(r'^(?P<question_id>[0-9]+)/result(s*)/$', views.Test.results, name='results'),
     # ex /poll/123123/vote
-    url(r'^(?P<question_id>[0-9]+)/vote(s*)/$', views.vote, name='vote')
+    url(r'^(?P<question_id>[0-9]+)/vote(s*)/$', views.Test.vote, name='vote')
 
 ]
