@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from .models import Question, Choice
 # Create your views here.
@@ -23,11 +23,20 @@ class Test():
 
 
     def results(request, question_id):
-        text = htmlformat.format('That second shit "{}" what i`w doesnt`t know  what is it -_-'.format(question_id))
-        return HttpResponse(text)
+        question = get_object_or_404(Question, pk=question_id)
+        return render(request, 'poll/results.html', {'question': question})
 
 
     def vote(request, question_id):
-        text = htmlformat.format('Just some text, OK? and that shit "{}" Any one can told me what that is it finaly ?!'.
-                                 format(question_id))
-        return HttpResponse(text)
+       question = get_object_or_404(Question, pk=question_id)
+       try:
+           selected_choice = question.choice_set.get(pk=request.POST['choice'])
+       except (KeyError, Choice.DoesNotExist):
+           return render(request, 'test:detail.html', {
+               'question': question,
+               'error_message': 'Ну ты и дибил! Ты не выбрали нихера! хВ'
+           })
+       else:
+           selected_choice.votes += 1
+           selected_choice.save()
+           return  HttpResponseRedirect(reverse('test:results', args=question_id))

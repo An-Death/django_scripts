@@ -9,8 +9,8 @@ urlpatterns = [
     #  ex: /poll/5/
     url(r'^(?P<question_id>[0-9]+)/*$', views.Test.detail, name='detail'),
     #  ex /poll/5/results
-    url(r'^(?P<question_id>[0-9]+)/result(s*)/$', views.Test.results, name='results'),
+    url(r'^(?P<question_id>[0-9]+)/results/$', views.Test.results, name='results'),
     # ex /poll/123123/vote
-    url(r'^(?P<question_id>[0-9]+)/vote(s*)/$', views.Test.vote, name='vote')
+    url(r'^(?P<question_id>[0-9]+)/vote/$', views.Test.vote, name='vote')
 
 ]
