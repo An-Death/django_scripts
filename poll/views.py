@@ -19,7 +19,7 @@ class Test():
     def detail(request, question_id):
         question = get_object_or_404(Question, pk=question_id)
             # raise Http404("That shit what you are asking fo is doest not exist!")
-        return render(request, 'poll/detail.html', {'question': question})
+        return render(request, 'poll/question_detail.html', {'question': question})
 
 
     def results(request, question_id):
@@ -32,7 +32,7 @@ class Test():
        try:
            selected_choice = question.choice_set.get(pk=request.POST['choice'])
        except (KeyError, Choice.DoesNotExist):
-           return render(request, 'test:detail.html', {
+           return render(request, 'test:question_detail.html', {
                'question': question,
                'error_message': 'Ну ты и дибил! Ты не выбрали нихера! хВ'
            })
