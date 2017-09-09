@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from  django.http import HttpResponse
-from django.template import loader
+from django.http import HttpResponse, Http404
+from django.shortcuts import render, get_object_or_404
 
 from .models import Question, Choice
 # Create your views here.
@@ -10,17 +10,16 @@ htmlformat = '<head><title>BIG NASTY SHIT!</title></head><body><h1>{}</h1></body
 class Test():
     def index(request):
         lates_message = Question.objects.order_by('pub_date')[:5]
-        template = loader.get_template('poll/index.html')
         context = {
             'latest_shit_was_happened': lates_message
         }
-        # output = '<br>'.join(q.question_text for q in lates_message)
-        return HttpResponse(template.render(context, request))
+        return render(request, 'poll/index.html', context) # HttpResponse(template.render(context, request))
 
 
     def detail(request, question_id):
-        text = htmlformat.format('I have no idea what the shit is it "{}"! Sorry!'.format(question_id))
-        return HttpResponse(text)
+        question = get_object_or_404(Question, pk=question_id)
+            # raise Http404("That shit what you are asking fo is doest not exist!")
+        return render(request, 'poll/detail.html', {'question': question})
 
 
     def results(request, question_id):
