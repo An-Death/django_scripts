@@ -1,0 +1,15 @@
+{% extends 'param_table_for_customer/meta.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+
+    {% block content %}
+        {% if active_wells %}
+            {% for well in active_wells %}
+                <a href="{% url 'param_table_for_customer:table' well.id %}" ><b>{{ well.name }}</b><br></a>
+            {% endfor %}
+                <!--<img src='{% static  "param_table_for_customer/projects/+fignia.name+.gif" %}' rel="{{ fignia.name }}">-->
+        {% else %}
+            <h1>ERROR</h1>
+            <h2>Did not founded any active well!</h2>
+        {% endif %}
+    {% endblock %}
